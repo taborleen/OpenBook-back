@@ -3,7 +3,7 @@ const Book = require("../models/Book.modele");
 module.exports.bookController = {
     createBook: async (req, res) => {
       
-        const {name, genres, author, description, price, publishingHouse, publicationYear, amountPages, size, coverType, left, discount, rating, image} = req.body;
+        const {name, genres, author, description, price, publicationYear, amountPages, size, coverType, left, discount, rating, image} = req.body;
   
         try {
           const book = await Book.create({
@@ -11,8 +11,7 @@ module.exports.bookController = {
             genres,
             author,
             description,
-            price, 
-            publishingHouse, 
+            price,  
             publicationYear, 
             amountPages, 
             size, 

@@ -3,10 +3,13 @@ const Review = require("../models/Review.model");
 module.exports.reviewController = {
   postReview: async (req, res) => {
     try {
-        await Review.create({
-            text: req.body.text,
-            grade: req.body.grade
-        });
+      await Review.create({
+        user: req.user.id,
+        text: req.body.text,
+        grade: req.body.grade,
+        book: req.body.book,
+      });
+      res.json()
     } catch (err) {
       res.json(err);
     }
@@ -15,13 +18,13 @@ module.exports.reviewController = {
     try {
       const rev = await Review.find({ book: req.params.id }).populate("user");
       res.json(rev);
-    }catch (err) {
+    } catch (err) {
       res.json(err);
     }
   },
   addLike: async (req, res) => {
     try {
-   const like = await Review.findByIdAndUpdate(req.params.id, {
+      const like = await Review.findByIdAndUpdate(req.params.id, {
         $push: { likes: req.body.likes },
       });
       res.json(like);

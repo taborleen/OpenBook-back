@@ -4,13 +4,13 @@ module.exports.authorController = {
   
   postAuthor: async (req, res) => {
     try {
-      await Author.create({
+     const createAuthor = await Author.create({
         name: req.body.name,
         description: req.body.description
       });
-      res.json("Автор добавлен");
-    } catch (err) {
-      res.json(err);
+      res.json(createAuthor);
+    } catch (error) {
+      res.json({error: 'Ошибка создания автора'});
     }
   },
 
@@ -18,8 +18,8 @@ module.exports.authorController = {
     try {
       const Authors = await Author.find({})
       res.json(Authors);
-    } catch (err) {
-      res.json(err);
+    } catch (error) {
+      res.json({error: 'Ошибка вывода авторов'});
     }
   },
 
@@ -27,8 +27,8 @@ module.exports.authorController = {
     try {
       const AuthorById = await Author.find({}).populate("bibliography");
       res.json(AuthorById);
-    } catch (err) {
-      res.json(err);
+    } catch (error) {
+      res.json({error: 'Ошибка вывода всех авторов'});
     }
   },
 };

@@ -19,7 +19,7 @@ module.exports.basketContrl = {
       await Basket.findByIdAndUpdate(req.params.BasketId, {
         $push: {
           bookId: req.body.bookId,
-          totalPrice: (totalPrice = totalPrice + BookPrice),
+          totalPrice: (totalPrice = totalPrice + BookPrice.price),
         },
       });
     } catch (error) {
@@ -33,11 +33,21 @@ module.exports.basketContrl = {
       await Basket.findByIdAndUpdate(req.params.BasketId, {
         $pull: {
           bookId: req.body.bookId,
-          totalPrice: (totalPrice = totalPrice - BookPrice),
+          totalPrice: (totalPrice = totalPrice - BookPrice.price),
         },
       });
     } catch (error) {
       res.json({ error: "Ошибка при удалении книги" });
+    }
+  },
+
+  clearBasket: async (req, res) => {
+    try {
+      await Basket.findByIdAndUpdate(req.params.BasketId, {
+        bookId: [],
+      });
+    } catch (error) {
+      res.json({ error: "Ошибка при очистки корзины" });
     }
   },
 };

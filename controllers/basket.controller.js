@@ -14,7 +14,7 @@ module.exports.basketContrl = {
   },
 
   addBookToBasket: async (req, res) => {
-    const BookPrice = await Drug.findById(req.params.bookId);
+    const BookPrice = await Book.findById(req.params.bookId);
     try {
       await Basket.findByIdAndUpdate(req.params.BasketId, {
         $push: {
@@ -28,10 +28,12 @@ module.exports.basketContrl = {
   },
 
   removeBookForBasket: async (req, res) => {
+    const BookPrice = await Book.findById(req.params.bookId);
     try {
       await Basket.findByIdAndUpdate(req.params.BasketId, {
         $pull: {
           bookId: req.body.bookId,
+          totalPrice: (totalPrice = totalPrice - BookPrice),
         },
       });
     } catch (error) {

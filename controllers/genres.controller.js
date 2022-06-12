@@ -3,13 +3,13 @@ const Genre = require("../models/Genre.model");
 module.exports.genreController = {
     postGenre: async (req, res) => {
         try {
-            await Genre.create({
+            const createGenre = await Genre.create({
                 name: req.body.name,
                 description: req.body.description
             });
-            res.json("Жанр добавлен");
-          } catch (err) {
-            res.json(err);
+            res.json(createGenre);
+          } catch (error) {
+            res.json({error: 'Ошибка добвления жанра'});
           }
       },
     
@@ -17,8 +17,8 @@ module.exports.genreController = {
         try {
           const genre = await Genre.find({});
           res.json(genre);
-        } catch (e) {
-          res.json(e);
+        } catch (error) {
+          res.json({error: 'Ошибка вывода жанров'});
         }
       },
 };

@@ -3,43 +3,43 @@ const Review = require("../models/Review.model");
 module.exports.reviewController = {
   postReview: async (req, res) => {
     try {
-      await Review.create({
+     const createReview = await Review.create({
         user: req.user.id,
         text: req.body.text,
         grade: req.body.grade,
         book: req.body.book,
       });
-      res.json()
-    } catch (err) {
-      res.json(err);
+      res.json(createReview)
+    } catch (error) {
+      res.json({error: 'Отзыв создан'});
     }
   },
   getRevBookId: async (req, res) => {
     try {
       const rev = await Review.find({ book: req.params.id }).populate("user");
       res.json(rev);
-    } catch (err) {
-      res.json(err);
+    } catch (error) {
+      res.json({error: 'Ошибка вывода отзыва по книге'});
     }
   },
   addLike: async (req, res) => {
     try {
       const like = await Review.findByIdAndUpdate(req.params.id, {
-        $push: { likes: req.body.likes },
+        $addToSet: { likes: req.body.likes },
       });
       res.json(like);
-    } catch (err) {
-      res.json(err);
+    } catch (error) {
+      res.json({error: 'Ошибка добавления лайка на отзыв'});
     }
   },
   delLike: async (req, res) => {
     try {
       const likeDel = await Review.findByIdAndUpdate(req.params.id, {
-        $pull: { likes: req.params.likes },
+        $pull: { likes: req.body.likes },
       });
       res.json(likeDel);
-    } catch (err) {
-      res.json(err);
+    } catch (error) {
+      res.json({error: 'Ошибка удаления лайка на отзыв'});
     }
   },
 };

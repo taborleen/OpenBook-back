@@ -96,4 +96,19 @@ module.exports.userController = {
       });
     }
   },
+
+  addBookmarks: async (req, res) => {
+    try {
+      const bookmarks = await User.findByIdAndUpdate(req.params.id, {
+        $addToSet: {
+          bookmarks: req.body.bookmarks,
+        },
+      });
+      return res.json(bookmarks);
+    } catch (error) {
+      res.status(401).json({
+        error: `Ошибка доступа  ${error.toString()}`,
+      });
+    }
+  },
 };

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const basketSchema = mongoose.basketSchema({
+const basketSchema = mongoose.Schema({
   userId: {
     type: mongoose.Types.ObjectId,
     ref: "User",

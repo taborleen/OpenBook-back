@@ -38,6 +38,7 @@ module.exports.discussionController = {
       console.error({err: "Ошибка при получении обсуждения по id"});
     }
   },
+  
   addAnswer: async (req, res) => {
     try {
       const discF = await Discussion.findById(req.params.discussionId);

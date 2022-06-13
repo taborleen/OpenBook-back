@@ -23,6 +23,7 @@ module.exports.commentsController = {
       console.error({err: 'Ошибка при получении комментариев'});
     }
   },
+  
   getCommentsById: async (req, res) => {
     try {
       const getByIdF = await Comment.findById({

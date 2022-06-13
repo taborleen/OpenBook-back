@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const authorShema = mongoose.Schema({
   name: String,
   description: String,
+  photo: String,
   bibliography: [
     {
       ref: "Book",

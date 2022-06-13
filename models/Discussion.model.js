@@ -6,8 +6,21 @@ const discussionsSchema = mongoose.Schema({
     ref: "User",
     type: mongoose.SchemaTypes.ObjectId,
   },
-  answers: [],
-  watched: [], // функция должна быть реализована через user
+  answers: [
+      {
+          ref: "Comment",
+          type: mongoose.SchemaTypes.ObjectId,
+          default:null
+      }
+  ],
+  watched: [
+    {
+        ref: "User",
+        type: mongoose.SchemaTypes.ObjectId,
+        default: null
+
+    }
+  ], // функция должна быть реализована через user
   text: String,
 });
 

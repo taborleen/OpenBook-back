@@ -1,5 +1,8 @@
 const req = require("express/lib/request");
+const { json } = require("express/lib/response");
+const Comment = require("../models/Comment.model");
 const Discussion = require("../models/Discussion.model");
+const User = require("../models/User.model");
 
 module.exports.discussionController = {
   postDiscussion: async (req, res) => {
@@ -14,7 +17,7 @@ module.exports.discussionController = {
       });
       res.json(createF);
     } catch (err) {
-      console.error(err);
+      console.error({err: "Ошибка при создании обсуждения"});
     }
   },
   getDiscussion: async (req, res) => {
@@ -22,7 +25,7 @@ module.exports.discussionController = {
       const getF = await Discussion.find({});
       res.json(getF);
     } catch (err) {
-      console.error(err);
+      console.error({err: "Ошибка при получении обсуждений"});
     }
   },
   getDiscussionById: async (req, res) => {
@@ -32,7 +35,33 @@ module.exports.discussionController = {
       });
       res.json(getByF);
     } catch (err) {
-      console.error(err);
+      console.error({err: "Ошибка при получении обсуждения по id"});
     }
   },
+  addAnswer: async (req, res) => {
+    try {
+      const discF = await Discussion.findById(req.params.discussionId);
+      const addF = await Discussion.findByIdAndUpdate(discF, {
+        $push: {
+          answers: req.body.answers,
+        },
+      });
+      res.json(addF);
+    } catch (err) {
+      console.error({err: "Ошибка при добавлении ответов"});
+    }
+  },
+  addWatched: async(req, res)=>{
+      try{
+          const discF = await Discussion.findById(req.params.discussionId);
+        const addF = await Discussion.findByIdAndUpdate(discF,{
+            $push:{
+                watched: req.body.watched
+            }
+        })
+        res.json(addF)
+      } catch(err){
+          console.error({err: "Ошибка при добавлении просмотров"})
+      }
+  }
 };

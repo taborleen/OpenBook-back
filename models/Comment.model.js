@@ -9,10 +9,12 @@ const commentsSchema = mongoose.Schema({
   commentsId: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Comments",
+    default:null
   },
-  themeId: {
+  topicId: {
       type:mongoose.SchemaTypes.ObjectId,
-      ref: "Discussion"
+      ref: "Discussion",
+      default:null
   }
 });
 

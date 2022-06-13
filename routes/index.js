@@ -2,11 +2,11 @@ const { Router } = require("express");
 
 const router = Router();
 
-const bookRoutes = require("./book.routes");
-const genresRoutes = require("./genres.routes");
-const authorsRoutes = require("./authors.routes");
-const reviewsRoutes = require("./reviews.routes");
-const usersRoutes = require("./users.routes");
+const bookRoutes = require("./book.route");
+const genresRoutes = require("./genres.route");
+const authorsRoutes = require("./authors.route");
+const reviewsRoutes = require("./reviews.route");
+const usersRoutes = require("./users.route");
 const basketRoutes = require("./basket.route");
 
 router.use("/books", bookRoutes);

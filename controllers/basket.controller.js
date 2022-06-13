@@ -45,6 +45,18 @@ module.exports.basketContrl = {
     try {
       await Basket.findByIdAndUpdate(req.params.BasketId, {
         bookId: [],
+        totalPrice: 0,
+      });
+    } catch (error) {
+      res.json({ error: "Ошибка при очистки корзины" });
+    }
+  },
+
+  buy: async (req, res) => {
+    try {
+      await Basket.findByIdAndUpdate(req.params.BasketId, {
+        bookId: [],
+        totalPrice: 0,
       });
     } catch (error) {
       res.json({ error: "Ошибка при очистки корзины" });

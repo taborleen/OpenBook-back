@@ -77,7 +77,7 @@ module.exports.userController = {
         id: candidate._id,
         log: candidate.login,
         name: candidate.name,
-        lastname: candidate.lastName,
+        lastname: candidate.lastname,
         email: candidate.email,
         tel: candidate.tel,
       };
@@ -109,6 +109,18 @@ module.exports.userController = {
       res.status(401).json({
         error: `Ошибка доступа  ${error.toString()}`,
       });
+    }
+  },
+
+  editAvatar: async (req, res) => {
+    try {
+      await User.findByIdAndUpdate(req.params.id, {
+        avatar: req.file.path,
+      });
+      const user = await User.findById(req.params.id);
+      return res.json(user);
+    } catch (err) {
+      return res.json({ error: err.message });
     }
   },
 };

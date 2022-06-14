@@ -18,7 +18,10 @@ const bookSchema = mongoose.Schema({
   coverType: String,
   left: Number,
   discount: Number,
-  rating: [],
+  rating: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Review",
+  },
   image: [],
 });
 

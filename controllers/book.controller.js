@@ -1,4 +1,5 @@
 const Book = require("../models/Book.modele");
+const Review = require("../models/Review.model");
 
 module.exports.bookController = {
   createBook: async (req, res) => {
@@ -42,7 +43,7 @@ module.exports.bookController = {
 
   getAllBook: async (req, res) => {
     try {
-      const book = await Book.find({}).populate("genres author");
+      const book = await Book.find({}).populate("genres author rating");
       res.json(book);
     } catch (error) {
       res.json({ error: "Ошибка при вызове" });
@@ -52,7 +53,7 @@ module.exports.bookController = {
   getOneBook: async (req, res) => {
     try {
       const book = await Book.findById(req.params.id).populate(
-        "genres author"
+        "genres author rating"
       );
       res.json(book);
     } catch (error) {
@@ -63,7 +64,7 @@ module.exports.bookController = {
     try {
       const book = await Book.find({
         genres: req.params.id,
-      }).populate("genres author");
+      }).populate("genres author rating");
       res.json(book);
     } catch (error) {
       res.json({ error: "ошибка при просмотре книг определенного жанра" });

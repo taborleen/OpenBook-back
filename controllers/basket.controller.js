@@ -1,12 +1,11 @@
 const Basket = require("../models/Basket.model");
+const Book = require("../models/Book.modele");
 
 module.exports.basketContrl = {
   addBasket: async (req, res) => {
     try {
       await Basket.create({
-        userId: user._id,
-        totalPrice: 0,
-        amout: 0,
+        userId: req.user.id,
       });
     } catch (error) {
       res.json({ error: "Ошибка при добавлении корзины" });
@@ -14,28 +13,36 @@ module.exports.basketContrl = {
   },
 
   addBookToBasket: async (req, res) => {
-    const BookPrice = await Book.findById(req.params.bookId);
     try {
-      await Basket.findByIdAndUpdate(req.params.BasketId, {
-        $push: {
+      const BookPrice = await Book.findById(req.body.bookId);
+      const basket = await Basket.findById(req.params.id);
+      const totalPrice = basket.totalPrice + BookPrice.price;
+
+      const result = await Basket.findByIdAndUpdate(req.params.id, {
+        $addToSet: {
           bookId: req.body.bookId,
-          totalPrice: (totalPrice = totalPrice + BookPrice.price),
         },
+        totalPrice,
       });
+      return res.json(result);
     } catch (error) {
       res.json({ error: "Ошибка при добавлении книги" });
     }
   },
 
   removeBookForBasket: async (req, res) => {
-    const BookPrice = await Book.findById(req.params.bookId);
+    const BookPrice = await Book.findById(req.body.bookId);
+    const basket = await Basket.findById(req.params.id);
+    const totalPrice = basket.totalPrice - BookPrice.price;
+
     try {
-      await Basket.findByIdAndUpdate(req.params.BasketId, {
+      const result = await Basket.findByIdAndUpdate(req.params.id, {
         $pull: {
           bookId: req.body.bookId,
-          totalPrice: (totalPrice = totalPrice - BookPrice.price),
         },
+        totalPrice,
       });
+      return res.json(result);
     } catch (error) {
       res.json({ error: "Ошибка при удалении книги" });
     }
@@ -43,10 +50,11 @@ module.exports.basketContrl = {
 
   clearBasket: async (req, res) => {
     try {
-      await Basket.findByIdAndUpdate(req.params.BasketId, {
+      const result = await Basket.findByIdAndUpdate(req.params.id, {
         bookId: [],
         totalPrice: 0,
       });
+      return res.json(result);
     } catch (error) {
       res.json({ error: "Ошибка при очистки корзины" });
     }
@@ -54,10 +62,12 @@ module.exports.basketContrl = {
 
   buy: async (req, res) => {
     try {
-      await Basket.findByIdAndUpdate(req.params.BasketId, {
+      const result = await Basket.findByIdAndUpdate(req.params.id, {
         bookId: [],
         totalPrice: 0,
       });
+
+      return res.json(result);
     } catch (error) {
       res.json({ error: "Ошибка при очистки корзины" });
     }

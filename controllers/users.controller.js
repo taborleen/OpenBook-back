@@ -1,6 +1,7 @@
 const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Basket = require("../models/Basket.model");
 
 module.exports.userController = {
   getAlUsers: async (req, res) => {
@@ -46,7 +47,8 @@ module.exports.userController = {
         tel,
         email,
       });
-      res.json(user);
+
+      return res.json(user);
     } catch (error) {
       res.status(400).json({
         error: `Ошибка при регистрации пользователя  ${error.toString()}`,

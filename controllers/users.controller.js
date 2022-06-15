@@ -48,6 +48,8 @@ module.exports.userController = {
         email,
       });
 
+      await Basket.create({ userId: user._id });
+
       return res.json(user);
     } catch (error) {
       res.status(400).json({

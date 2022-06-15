@@ -11,7 +11,10 @@ const basketSchema = mongoose.Schema({
       ref: "Book",
     },
   ],
-  totalPrice: Number,
+  totalPrice: {
+    type: Number,
+    default: 0,
+  },
   amout: { type: Number, default: 0 },
 });
 

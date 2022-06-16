@@ -70,4 +70,17 @@ module.exports.bookController = {
       res.json({ error: "ошибка при просмотре книг определенного жанра" });
     }
   },
+
+  addReview: async (req, res) => {
+    try {
+      const retAddReview = await Review.findByIdAndUpdate({
+        $push: {
+          raiting: req.body.raiting
+        }
+      });
+      return res.json(retAddReview);
+    } catch (error) {
+      res.json({ error: "Отзыв добавлен" });
+    }
+  },
 };

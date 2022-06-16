@@ -73,14 +73,14 @@ module.exports.bookController = {
 
   addReview: async (req, res) => {
     try {
-      const retAddReview = await Review.findByIdAndUpdate({
+      const retAddReview = await Book.findByIdAndUpdate(req.params.id, {
         $push: {
-          raiting: req.body.raiting
-        }
+          rating: req.body.rating,
+        },
       });
       return res.json(retAddReview);
     } catch (error) {
-      res.json({ error: "Отзыв добавлен" });
+      res.json({ error: "ошибка добавления отзыва" });
     }
   },
 };

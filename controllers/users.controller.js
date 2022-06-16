@@ -6,7 +6,7 @@ const Basket = require("../models/Basket.model");
 module.exports.userController = {
   getAlUsers: async (req, res) => {
     try {
-      const users = await User.find();
+      const users = await User.find().populate("buyed");
       return res.json(users);
     } catch (error) {
       res.status(400).json({
@@ -17,7 +17,7 @@ module.exports.userController = {
   getUserById: async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await User.findById(id);
+      const user = await User.findById(id).populate("buyed");
       res.json(user);
     } catch (error) {
       res.status(400).json({
@@ -93,7 +93,12 @@ module.exports.userController = {
       if (!token)
         res.status(400).json({ error: "Ошибка при получении токена" });
 
-      return res.json({ token });
+      return res.json({
+        token,
+        id: payload.id,
+        name: candidate.name,
+        avatar: candidate.avatar,
+      });
     } catch (error) {
       res.status(400).json({
         error: `Ошибка при авторизации  ${error.toString()}`,
@@ -122,6 +127,35 @@ module.exports.userController = {
         avatar: req.file.path,
       });
       const user = await User.findById(req.params.id);
+      return res.json(user);
+    } catch (err) {
+      return res.json({ error: err.message });
+    }
+  },
+
+  editUser: async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, {
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        tel: req.body.tel,
+        login: req.body.login,
+        password: req.body.password,
+      });
+      return res.json(user);
+    } catch (err) {
+      return res.json({ error: err.message });
+    }
+  },
+
+  editBuyed: async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, {
+        $addToSet: {
+          buyed: req.body.buyed,
+        },
+      });
       return res.json(user);
     } catch (err) {
       return res.json({ error: err.message });

@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(require("./routes"));
-app.use(express.static(path.resolve(__dirname, "public")));
+app.use('/images', express.static(path.resolve(__dirname, "images")));
 
 mongoose
   .connect("mongodb+srv://user1:admin@cluster0.rqoqm.mongodb.net/open-book")

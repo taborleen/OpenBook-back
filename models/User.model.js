@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userShema = mongoose.Schema({
   avatar: {
     type: String,
-    default: 'public\\user.png',
+    default: "public\\user.png",
   },
   name: String,
   lastname: String,
@@ -17,8 +17,16 @@ const userShema = mongoose.Schema({
   ],
   buyed: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "Book",
+      order: [
+        {
+          type: mongoose.SchemaTypes.ObjectId,
+          ref: "Basket",
+        },
+      ],
+      status: {
+        type: String,
+        default: "На рассмотрении",
+      },
     },
   ],
   login: {

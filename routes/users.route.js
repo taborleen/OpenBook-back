@@ -10,6 +10,7 @@ router.post("/login", userController.login);
 router.get("/", userController.getAlUsers);
 router.get("/:id", userController.getUserById);
 router.patch("/:id/bookmarks", authmiddleware, userController.addBookmarks);
+router.patch("/:id/bookmarks/delete", authmiddleware, userController.removeBookmark);
 router.patch(
   "/avatar/:id",
   fileMiddleware.single("avatar"),

@@ -73,4 +73,12 @@ module.exports.basketContrl = {
       res.json({ error: "Ошибка при очистки корзины" });
     }
   },
+  getBooksOnBasket: async (req, res) => {
+    try {
+      const basket = await Basket.find({}).populate('bookId');
+      res.json(basket);
+    } catch (error) {
+      res.json({ error: "Ошибка при просмотре книг корзины" });
+    }
+  },
 };

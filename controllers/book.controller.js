@@ -70,6 +70,16 @@ module.exports.bookController = {
       res.json({ error: "ошибка при просмотре книг определенного жанра" });
     }
   },
+  getBooksOnAuthor: async (req, res) => {
+    try {
+      const book = await Book.find({
+        author: req.params.id,
+      }).populate("author genres rating");
+      res.json(book);
+    } catch (error) {
+      res.json({ error: "ошибка при просмотре книг определенного автора" });
+    }
+  },
 
   addReview: async (req, res) => {
     try {

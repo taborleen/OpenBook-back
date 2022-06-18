@@ -108,11 +108,38 @@ module.exports.userController = {
 
   addBookmarks: async (req, res) => {
     try {
-      const bookmarks = await User.findByIdAndUpdate(req.params.id, {
-        $addToSet: {
-          bookmarks: req.body.bookmarks,
+      const bookmarks = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: {
+            bookmarks: req.body.bookmarks,
+          },
         },
+        {
+          new: true,
+        }
+      );
+      return res.json(bookmarks);
+    } catch (error) {
+      res.status(401).json({
+        error: `Ошибка доступа  ${error.toString()}`,
       });
+    }
+  },
+
+  removeBookmark: async (req, res) => {
+    try {
+      const bookmarks = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: {
+            bookmarks: req.body.bookmarks,
+          },
+        },
+        {
+          new: true,
+        }
+      );
       return res.json(bookmarks);
     } catch (error) {
       res.status(401).json({

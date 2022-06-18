@@ -20,9 +20,10 @@ module.exports.basketContrl = {
 
       const result = await Basket.findByIdAndUpdate(req.params.id, {
         $addToSet: {
+          totalPrice,
           bookId: req.body.bookId,
+          totalPrice,
         },
-        totalPrice,
       });
       return res.json(result);
     } catch (error) {
@@ -39,8 +40,8 @@ module.exports.basketContrl = {
       const result = await Basket.findByIdAndUpdate(req.params.id, {
         $pull: {
           bookId: req.body.bookId,
+          totalPrice,
         },
-        totalPrice,
       });
       return res.json(result);
     } catch (error) {

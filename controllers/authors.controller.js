@@ -25,7 +25,7 @@ module.exports.authorController = {
 
   getAllAuthorsById: async (req, res) => {
     try {
-      const AuthorById = await Author.find({}).populate("bibliography");
+      const AuthorById = await Author.findById(req.params.id).populate("bibliography");
       res.json(AuthorById);
     } catch (error) {
       res.json({ error: "Ошибка вывода всех авторов" });

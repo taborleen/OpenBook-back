@@ -20,9 +20,8 @@ module.exports.basketContrl = {
 
       const result = await Basket.findByIdAndUpdate(req.params.id, {
         $addToSet: {
-          totalPrice,
+          //totalPrice,
           bookId: req.body.bookId,
-          totalPrice,
         },
       });
       return res.json(result);
@@ -40,7 +39,7 @@ module.exports.basketContrl = {
       const result = await Basket.findByIdAndUpdate(req.params.id, {
         $pull: {
           bookId: req.body.bookId,
-          totalPrice,
+          //totalPrice,
         },
       });
       return res.json(result);
@@ -81,4 +80,9 @@ module.exports.basketContrl = {
       res.json({ error: "Ошибка при просмотре книг корзины" });
     }
   },
+
+
+
 };
+
+

@@ -5,7 +5,7 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const router = Router();
 
 router.post("/", authMiddleware, basketContrl.addBasket);
-router.get('/getBasket', basketContrl.getBooksOnBasket)
+router.get('/getBasket/:id', basketContrl.getBooksOnBasket)
 router.patch("/add/:id", authMiddleware, basketContrl.addBookToBasket);
 router.patch("/delete/:id", basketContrl.removeBookForBasket);
 router.patch("/clear/:id", basketContrl.clearBasket);

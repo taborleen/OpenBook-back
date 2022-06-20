@@ -93,4 +93,36 @@ module.exports.bookController = {
       res.json({ error: "ошибка добавления отзыва" });
     }
   },
+
+  increment: async (req, res) => {
+    try {
+      const result = await Book.findByIdAndUpdate(
+        req.params.id,
+        {
+          amount: req.body.amount,
+          //left: req.body.left,
+        },
+        { new: true }
+      );
+      return res.json(result);
+    } catch (error) {
+      res.json({ error: "Ошибка при увеличении" });
+    }
+  },
+  decrement: async (req, res) => {
+    try {
+      const result = await Book.findByIdAndUpdate(
+        req.params.id,
+        {
+          amount: req.body.amount,
+          //left: req.body.left,
+        },
+        { new: true }
+      );
+      return res.json(result);
+    } catch (error) {
+      res.json({ error: "Ошибка при уменьшении" });
+    }
+  },
+  
 };

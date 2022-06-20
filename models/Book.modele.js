@@ -25,6 +25,7 @@ const bookSchema = mongoose.Schema({
     },
   ],
   image: [],
+  amount: Number
 });
 
 const Book = mongoose.model("Book", bookSchema);
